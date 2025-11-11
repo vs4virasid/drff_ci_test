@@ -5,11 +5,12 @@ pipeline {
             steps {
                 bat '''
                 python -m venv venv
+                venv\\Scripts\\pip install --upgrade pip
                 venv\\Scripts\\pip install -r requirements.txt
                 '''
             }
         }
-        stage('Tests') {
+        stage('Run Tests') {
             steps {
                 bat 'venv\\Scripts\\pytest tests'
             }
