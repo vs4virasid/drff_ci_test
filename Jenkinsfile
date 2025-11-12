@@ -30,7 +30,7 @@ pipeline {
 
     post {
         success {
-            echo '✅ Build passed'
+            echo '✅ Build passed '
             githubNotify context: 'CI', status: 'SUCCESS', description: 'Build passed successfully', targetUrl: env.BUILD_URL
         }
         failure {
