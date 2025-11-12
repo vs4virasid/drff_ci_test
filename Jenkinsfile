@@ -29,15 +29,13 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'Cleaning up workspace...'
-            deleteDir()
-        }
         success {
-            echo '✅ Pipeline completed successfully!'
+            echo '✅ Build passed'
+            githubNotify context: 'CI', status: 'SUCCESS', description: 'Build passed successfully', targetUrl: env.BUILD_URL
         }
         failure {
-            echo '❌ Pipeline failed!'
+            echo '❌ Build failed'
+            githubNotify context: 'CI', status: 'FAILURE', description: 'Build failed', targetUrl: env.BUILD_URL
         }
     }
 }
