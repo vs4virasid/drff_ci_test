@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                bat 'venv\\Scripts\\pytest tests'
+                bat 'venv\\Scripts\\pytest app'
             }
         }
     }
