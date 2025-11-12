@@ -1,6 +1,13 @@
 pipeline {
     agent any
+
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Setup') {
             steps {
                 bat '''
@@ -10,10 +17,27 @@ pipeline {
                 '''
             }
         }
+
         stage('Run Tests') {
             steps {
-                bat 'venv\\Scripts\\pytest app'
+                bat '''
+                echo Running Django tests with pytest...
+                venv\\Scripts\\pytest --ds=drff_ci_test.settings --maxfail=1 --disable-warnings -v
+                '''
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()
+        }
+        success {
+            echo '✅ Pipeline completed successfully!'
+        }
+        failure {
+            echo '❌ Pipeline failed!'
         }
     }
 }
